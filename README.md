@@ -83,7 +83,7 @@ vim examples/sglang_multiturn/mua_32b.sh
 
 ```bash
 # For 4*8 GPU setup, suggest H200 141GB
-bash examples/sglang_multiturn/mua_32b.sh
+bash examples/sglang_multiturn/mua_grpo.sh
 ```
 
 
