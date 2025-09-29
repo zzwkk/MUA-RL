@@ -1,10 +1,9 @@
-<div align="center">
-  <picture>
-      <img src="./assets/logo.png" width="100%">
-  </picture>
-</div>
 
-<hr>
+<div align="center">
+
+# MUA-RL
+
+</div>
 
 <div align="center" style="line-height: 1;">
 
