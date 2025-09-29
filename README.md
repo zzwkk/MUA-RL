@@ -1,14 +1,16 @@
-
 <div align="center">
-
-# MUA-RL
-
+  <picture>
+      <img src="./assets/logo.png" width="100%">
+  </picture>
 </div>
+
+<hr>
 
 <div align="center" style="line-height: 1;">
 
 [![Model](https://img.shields.io/badge/Model-FFD21E?style=for-the-badge&logo=huggingface&logoColor=black)](https://huggingface.co/zzwkk/MUA-RL-32B)
 [![Dataset](https://img.shields.io/badge/Dataset-FFD21E?style=for-the-badge&logo=huggingface&logoColor=black)](https://huggingface.co/datasets/zzwkk/MUA-RL-Dataset)
+[![arXiv](https://img.shields.io/badge/arXiv-2508.18669-b31b1b?style=for-the-badge)](https://arxiv.org/abs/2508.18669)
 [![GITHUB](https://img.shields.io/badge/Github-24292F?style=for-the-badge&logo=github&logoColor=white)](https://github.com/zzwkk/MUA-RL)
 
 
