@@ -1,38 +1,78 @@
-# Multi-Turn Rollout Example (GSM8K)
+# Multi-Turn Rollout Example
 
-This example demonstrates how to perform **multi-turn rollout** using SGLang with a tool-calling capable model (e.g., Qwen2.5-3B) on the GSM8K dataset.
+## 🚀 Quick Start - Run MUA Code
 
-## Usage
+### 1. Installation
 
-### Step 1: Download GSM8K Dataset
+#### Prerequisites
+- Python 3.8+
+- CUDA 11.8+ (for GPU training)
+- PyTorch 2.0+
 
-```bash
-cd examples/data_preprocess
-python3 gsm8k_multiturn_w_tool.py
-```
-
-This will download and preprocess the GSM8K dataset into ~/data/gsm8k/.
-
-### Step 2: Run Multi-Turn Rollout
-
-If you have 8 GPUs
-Use the standard 8-GPU script:
+#### Quick Install
 
 ```bash
-cd your_verl_root_dir
-bash examples/sglang_multiturn/run_qwen2.5-3b_gsm8k_multiturn.sh
+# Clone the repository
+git clone https://github.com/zzwkk/MUA-RL.git
+cd MUA-RL
+
+# Install dependencies
+pip install -e .
+pip install -r requirements_sglang.txt
+pip install transformers==4.51.1
 ```
 
-If you have only 4 GPUs
-Use the fallback 4-GPU script:
+### 2. Configure Training
+
+Edit the training script parameters:
 
 ```bash
-cd your_verl_root_dir
-bash examples/sglang_multiturn/run_qwen2.5-3b_gsm8k_multiturn_4xgpu.sh 
+# Edit model path and other parameters in the script
+vim examples/sglang_multiturn/mua_32b.sh
 ```
 
-## Notes
+#### Key Parameters to Modify:
 
-- The rollout supports multi-turn conversations with tool-calling capabilities.
-- Current tools are used for GSM8K answer evaluation.
-- Future versions may extend to search and code interpreter tools.
+| Parameter | Description | Example |
+|-----------|-------------|---------|
+| `MODEL_PATH` | Path to your base model | `/path/to/your/model` |
+| `N_NODE` | Number of nodes for distributed training | `4` |
+| `BATCH_SIZE` | Training batch size | `32` |
+| `EPOCH_NUM` | Number of training epochs | `30` |
+| `API_KEY` | OpenAI API key for evaluation model | `sk-...` |
+| `BASE_URL` | OpenAI API base URL | `https://api.openai.com/v1` |
+| `CKPT_DIR` | Directory path to save model checkpoints | `/path/to/checkpoints` |
+| `TENSORBOARD_DIR` | Directory path for TensorBoard logs | `/path/to/tensorboard` |
+| `ROLLOUT_LOG_PATH` | Directory path for rollout generation logs | `/path/to/rollout_logs` |
+| `VALID_LOG_PATH` | Directory path for validation logs | `/path/to/validation_logs` |
+
+### 3. Run Training
+
+#### Multi-Node Training (4 * 8 GPUs)
+
+```bash
+# For 4*8 GPU setup, suggest H200 141GB
+bash examples/sglang_multiturn/mua_32b.sh
+```
+
+### 4. Convert Checkpoints to Hugging Face Format
+
+After training, convert distributed checkpoints to Hugging Face format:
+
+```bash
+# Edit the merge script configuration
+vim scripts/merge.sh
+
+# Set your model path and name
+BASE_DIR="/path/to/your/checkpoints/"
+MODEL_NAME="your_model_name"
+
+# Run the conversion
+bash scripts/merge.sh
+```
+
+The script will automatically:
+- 🔍 Find all `global_step_*` directories
+- 🔄 Convert FSDP/Megatron checkpoints to Hugging Face format
+- 💾 Save merged models to `iter_XXXXXX/actor/unify_checkpoint/`
+
