@@ -23,9 +23,9 @@ export HCCL_CONNECT_TIMEOUT=3600
 export GLOO_SOCKET_TIMEOUT=3600
 export PATH=$PATH:~/.local/bin \
 && rm -rf ./verl.egg-info \
-&& pip3 install tensorboard 
-&& pip3 install -e .
-&& pip3 install -r ./requirements_sglang.txt
+&& pip3 install tensorboard \
+&& pip3 install -e . \
+&& pip3 install -r ./requirements_sglang.txt \
 && pip3 install transformers==4.51.1
 
 PROJECT_DIR="$(pwd)"
